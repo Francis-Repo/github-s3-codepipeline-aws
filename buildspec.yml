@@ -13,9 +13,8 @@ phases:
     commands:
       - echo "Building static HTML site"
       - mkdir -p output
-      # Exclude output directory itself from being copied
-      - shopt -s extglob
-      - cp -r !(output) output/
+      # Copy all files except 'output' dir and current dir
+      - find . -maxdepth 1 ! -name 'output' ! -name '.' -exec cp -r {} output/ \;
       - rm -f output/buildspec.yml
 
   post_build:
